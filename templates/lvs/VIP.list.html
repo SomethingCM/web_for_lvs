@@ -1,0 +1,49 @@
+{% extends "auto_lvs/common/base.side.html" %}
+   <!-- Role List -->
+{% block title %}
+自动化运维系统
+{% endblock %}
+
+{% block head %}
+    <script src="/static/js/jquery.bootstrap-duallistbox.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap-duallistbox.css">
+{% endblock %}
+
+{% block rcontent %}
+
+    <table class="table table-hover table-striped  table-bordered table-condensed">
+        <tr>
+            <th>VIP</th>
+            <th>端口号</th>
+            <th>调度算法</th>
+            <th>负载规则</th>
+            <th>Realserver&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp端口号&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp权重</th>
+            <th>操作</th>
+        </tr>
+
+        {% for i in lPage %}
+            <tr style="font-size: 13px;">
+                <td>{{ i.ip }} </td>
+                <td>{{ i.port }} </td>
+                <td>{{ i.lb_algo }} </td>
+                <td>{{ i.lb_kind }} </td>
+                 <td>{% for it in i.realserver.all%}
+				{{ it.ip }}&nbsp&nbsp &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp{{it.port}}&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{ it.weight}} <br>{% endfor%} </td>
+
+                <td>
+                    <a href={% url "editVIPurl" i.id %} onclick="return confirm('确认编辑VIP吗？？')"><span class="glyphicon glyphicon-edit btn-xs"></span></a>
+                    <a href={% url "DeleteVIPurl" i.id %} onclick="return confirm('确认删除VIP吗？？')"><span class="glyphicon glyphicon-trash btn-xs"></span></a>
+                </td>
+            </tr>
+        {% endfor %}</table>
+
+		<table>
+        <tr>
+
+            <a class="btn btn-danger btn-xs pull-right" href={% url "addVIPurl"  %} onclick="return confirm('确认添加VIP吗？？')">添加</a>
+        </tr>
+    </table>
+<br>
+<br>
+    {% include "auto_lvs/common/paginator.html" %}
+{% endblock %}

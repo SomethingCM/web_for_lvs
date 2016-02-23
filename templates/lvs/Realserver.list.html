@@ -1,0 +1,47 @@
+﻿
+{% extends "auto_lvs/common/base.side.html" %}
+   <!-- Role List -->
+{% block title %}
+自动化运维系统
+{% endblock %}
+
+
+{% block rcontent %}
+  
+               	<table class="table table-hover table-striped  table-bordered table-condensed">
+					<tr>
+						<th>realserver ip</th>
+						<th>port</th>
+						<th>weight</th>
+						<th>操作</th>
+					</tr>
+					{% for res in lPage %}
+					<tr style="font-size: 13px;">
+						<td>{{res.ip}}</td>
+						<td>{{res.port}}</td>
+						<td>{{res.weight}}</td>
+						<td class="host_buttom">
+                      <a  href={% url "editRealserverurl" res.id %}  onclick="return confirm('是否确认编辑？')"> &nbsp<span class="glyphicon glyphicon-edit btn-xs"></span></a>
+                      <a  href={% url "DeleteRealserverurl" res.id %}  onclick="return confirm('是否确认删除？')"> &nbsp<span class="glyphicon glyphicon-trash btn-xs"></span></a>
+                    </td>
+					</tr>
+					{% endfor %}
+
+					
+				</table>
+				<table>
+				
+                      <a  class="btn btn-danger btn-xs pull-right" href={% url "addRealserverurl" %}  onclick="return confirm('是否添加？')"> 添加</a>
+                    
+				</table>
+				<br>
+				<br>
+ {% include "auto_lvs/common/paginator.html" %}
+
+
+{% endblock %}
+				<!-- 							<td class="host_buttom">
+							<a class="btn btn-info btn-xs"  href="/autoCloud/cloud/start/{{res.id}}/ " >开机</a>
+
+						</td>		<a class="btn btn-warning btn-xs" href={% url "Stopurl" res.id %} >关机</a>
+							<a class="btn btn-danger btn-xs" href={% url "Restarturl" res.id %} >重启</a> -->

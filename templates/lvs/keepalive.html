@@ -1,0 +1,51 @@
+{% extends "auto_lvs/common/base.side.html" %}
+   <!--  List User -->
+{% block title %}
+自动化运维系统
+{% endblock %}
+
+{% block rcontent %}
+
+<hr><br>
+    <div class="btn-toolbar">
+        <div class="btn-group">
+            {% url "createtemplateurl" as createtemplateurl %}
+            <a class="btn btn-default {%if request.path = createtemplateurl%} active {%endif%}" href={{ createtemplateurl }} id="keepalive_conf"><span class="glyphicon glyphicon-edit"></span>生成配置</a>
+            {% url "rsynctemplateurl" as rsynctemplateurl %}
+            <a class="btn btn-default {%if request.path = rsynctemplateurl%} active {%endif%}" href={{ rsynctemplateurl }}><span class="glyphicon glyphicon-list"></span>下发配置</a>
+        </div>
+    </div>
+
+    <hr/>
+{% if  msg %}
+	<div class="alert alert-info">
+	 <button type="button" class="close" data-dismiss="alert">×</button>
+	 {% for ret in msg %}
+	 {{ret}}<br>
+	 {%endfor%}
+	 <br>
+	
+    </div>
+ {% endif %}
+ <div class="row">
+  <div class="col-md-6">
+  <h3><p>Keepalive master conf</p></h3>
+  <textarea style="background:#CBD8E6;width:100%;" class="input-block-level" rows="23" id="master_conf">{{masterconf}}</textarea></div>
+  <div class="col-md-6">
+  <h3><p>Keepalive slave conf</p></h3>
+  <textarea style="background:#CBD8E6;width:100%;" class="input-block-level" rows="23" id="slave_conf">{{slaveconf}}</textarea></div>
+</div>
+ 
+{% if err %}
+    <div class="alert alert-error">
+	<button type="button" class="close" data-dismiss="alert">×</button>
+	 {% for ret in err %}
+	 {{ret}}<br>
+	 {%endfor%}
+
+	</div>
+ {% endif %}
+       <p>暂留</p>
+
+
+{% endblock %}
